@@ -65,17 +65,15 @@ public class CountryService {
         return countryDtos;
     }
 
-    public List<CountryDto> getCountriesByContinent(String continent) {
+    public CountryDto getCountriesByContinent(String continent) {
 
         List<CountryDto> countryDtos = new ArrayList<>();
-        List<Country> countryList =
-                getAllCountries().stream().filter(c -> c.getContinent().equalsIgnoreCase(continent)).toList();
+        List<Country> countryList = getAllCountries();
 
-        for (Country c : countryList) {
-            CountryDto countryDto = mapToDTO(c);
-            countryDtos.add(countryDto);
+        if (Objects.nonNull(continent) && !continent.isEmpty()) {
+            countryList = countryList.stream().filter(c -> c.getContinent().equalsIgnoreCase(continent)).toList();
         }
-        return countryDtos;
+        return 
     }
 
     private CountryDto mapToDTO(Country country) {
