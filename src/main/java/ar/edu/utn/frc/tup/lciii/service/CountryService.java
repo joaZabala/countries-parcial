@@ -41,7 +41,7 @@ public class CountryService {
                 .area(((Number) countryData.get("area")).doubleValue())
                 .region((String) countryData.get("region"))
                 .languages((Map<String, String>) countryData.get("languages"))
-                .continent((String) countryData.get("continent"))
+                .continent((List<String>) countryData.get("continents"))
                 .borders((List<String>) countryData.get("borders"))
                 .build();
     }
@@ -68,12 +68,14 @@ public class CountryService {
     public List<CountryDto> getCountriesByContinent(String continent) {
 
         List<CountryDto> countryDtos = new ArrayList<>();
-        List<Country> countryList =
-                getAllCountries().stream().filter(c -> c.getContinent().equalsIgnoreCase(continent)).toList();
+        List<Country> countryList = getAllCountries();
 
         for (Country c : countryList) {
-            CountryDto countryDto = mapToDTO(c);
-            countryDtos.add(countryDto);
+            if(c.getContinent().get(0).equalsIgnoreCase(continent)){
+                
+                CountryDto countryDto = mapToDTO(c);
+                countryDtos.add(countryDto);
+            }
         }
         return countryDtos;
     }

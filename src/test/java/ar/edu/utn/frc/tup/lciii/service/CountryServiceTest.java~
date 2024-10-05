@@ -45,7 +45,7 @@ class CountryServiceTest {
         country1.put("area", 50);
         country1.put("region", "Europe");
         country1.put("languages", Collections.singletonMap("spa", "Spanish"));
-
+        
         response.add(country1);
         when(restTemplate.getForObject(anyString(), eq(List.class))).thenReturn(response);
 
@@ -80,35 +80,6 @@ class CountryServiceTest {
         when(countryService.getAllCountries()).thenReturn(list);
 
         List<CountryDto> countryDtos = countryService.getCountriesDto("Argentina" , "");
-
-        assertEquals(1, countryDtos.size());
-        assertEquals("Argentina", list.get(0).getName());
-        assertEquals("ARG", list.get(0).getCode());
-    }
-
-    @Test
-    void  getCountriesByCode(){
-        Country country = new Country();
-        country.setName("Argentina");
-        country.setCode("ARG");
-
-        List<Country> list = new ArrayList<>();
-        list.add(country);
-
-        List<Map<String, Object>> response = new ArrayList<>();
-        Map<String, Object> country1 = new HashMap<>();
-        country1.put("name", Collections.singletonMap("common", "Argentina"));
-        country1.put("cca3", "ARG");
-        country1.put("population", 46);
-        country1.put("area", 50);
-        country1.put("region", "AMERICA");
-        country1.put("languages", Collections.singletonMap("spa", "Spanish"));
-        response.add(country1);
-        when(restTemplate.getForObject(anyString(), eq(List.class))).thenReturn(response);
-
-        when(countryService.getAllCountries()).thenReturn(list);
-
-        List<CountryDto> countryDtos = countryService.getCountriesDto("" , "ARG");
 
         assertEquals(1, countryDtos.size());
         assertEquals("Argentina", list.get(0).getName());
